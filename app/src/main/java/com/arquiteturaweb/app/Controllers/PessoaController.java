@@ -6,11 +6,13 @@ import java.util.Optional;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.arquiteturaweb.app.Repositories.PessoaRepository;
@@ -70,6 +72,22 @@ public class PessoaController {
         } catch(Exception e){
             System.out.println(e);
             return ResponseEntity.badRequest().body("Erro ao persistir no banco");
+        }
+    }
+
+    @DeleteMapping("/delete")
+    public ResponseEntity<String> delete(@RequestParam Long Id){
+
+        if(!Context.existsById(Id)){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Pessoa com ID: " + Id + " não encontrado");
+        }
+
+        try{
+            Context.deleteById(Id);
+            return ResponseEntity.ok("Pessoa deletada com sucesso");
+        } catch(Exception e){
+            System.out.println(e);
+            return ResponseEntity.badRequest().body("Erro ao persistir no banco de dados");
         }
     }
 }
