@@ -27,21 +27,25 @@ public class PessoaController {
 
     @GetMapping("/pessoa")
     public ResponseEntity<List<PessoaDTO>> read() {
-        return pessoaService.read();
+        return ResponseEntity.ok(pessoaService.read());
     }
 
     @PostMapping("/pessoa")
     public ResponseEntity<String> create(@RequestBody PessoaDTO pessoa) {
-        return pessoaService.create(pessoa);
+        pessoaService.create(pessoa);
+        return ResponseEntity.ok("Pessoa criada com sucesso");
     }
 
     @PutMapping("/pessoa/{id}")
     public ResponseEntity<String> update(@PathVariable Long id, @RequestBody PessoaDTO pessoa) {
-        return pessoaService.update(id, pessoa);
+        pessoaService.update(id, pessoa);
+        return ResponseEntity.ok("Pessoa atualizada com sucesso");
     }
 
     @DeleteMapping("/pessoa/{id}")
     public ResponseEntity<String> delete(@PathVariable Long id) {
-        return pessoaService.delete(id);
+        pessoaService.delete(id);
+        return ResponseEntity.ok("Pessoa deletada com sucesso");
     }
 }
+
